@@ -31,8 +31,11 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useNavigate } from "react-router-dom";
 
 export function Layout() {
+  const navigate = useNavigate();
+
   const getNavLinkClass = (isActive: boolean) => {
     return `flex items-center gap-3 px-3 py-2 transition-all rounded-lg ${
       isActive
@@ -192,7 +195,7 @@ export function Layout() {
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate("/login")}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
