@@ -11,8 +11,13 @@ import Layout from "@/layouts";
 const Dashboard = lazy(() => import("@/views/Dashboard"));
 const Order = lazy(() => import("@/views/Order"));
 const Product = lazy(() => import("@/views/Product"));
+const Login = lazy(() => import("@/views/Login"));
 
 const routes: RouteObject[] = [
+  {
+    path: "/login",
+    element: <Login />
+  },
   {
     path: "/",
     element: <Layout />,
@@ -21,6 +26,7 @@ const routes: RouteObject[] = [
       { path: "/dashboard", element: <Dashboard /> },
       { path: "/product", element: <Product /> },
       { path: "/order", element: <Order /> },
+      { path: "/delivery", element: <Order /> },
     ],
   },
 ]
