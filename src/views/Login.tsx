@@ -6,51 +6,28 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useEffect, useState } from "react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useNavigate } from "react-router";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-function LoginForm() {
+export function LoginForm() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const handleOnLogin = async() => {
-    const payload = { email, password: password.trim() };
-
-    setLoading(true);
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-
-    const resJson = await res.json();
-    setLoading(false);
-
-    if (resJson.data.access_token) {
-      localStorage.setItem("token", resJson.data.access_token);
-      navigate("/dashboard")
-    }
+  const handleOnLogin = () => {
+    console.log("Login");
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      navigate("/dashboard");
+    }, 3000);
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (token) {
-      navigate(-1);
-    }
-  }, [])
-
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex flex-col items-center justify-center w-screen h-screen ">
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
@@ -66,22 +43,20 @@ function LoginForm() {
               type="email"
               placeholder="m@example.com"
               required
-              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              required
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <Input id="password" type="password" required />
           </div>
         </CardContent>
         <CardFooter>
-          <Button className="w-full" onClick={handleOnLogin} disabled={loading} >
-            { loading ? "Submitting..." : "Sign in" }
+          <Button
+            className="w-full"
+            onClick={handleOnLogin}
+            loading={isLoading}
+          >
+            Sign in
           </Button>
         </CardFooter>
       </Card>
@@ -89,4 +64,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default React.memo(LoginForm);

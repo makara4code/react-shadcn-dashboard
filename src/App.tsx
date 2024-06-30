@@ -14,6 +14,7 @@ const Product = lazy(() => import("@/views/Product"));
 const Login = lazy(() => import("@/views/Login"));
 
 const routes: RouteObject[] = [
+  { path: "/login", element: <Login /> },
   {
     path: "/login",
     element: <Login />
@@ -29,7 +30,7 @@ const routes: RouteObject[] = [
       { path: "/delivery", element: <Order /> },
     ],
   },
-]
+];
 
 const router = createBrowserRouter(routes);
 
